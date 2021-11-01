@@ -1,107 +1,191 @@
-# Program make a simple calculator
+# main python proghram
+
+response=['Welcome to smart calculator','My name is MONTY',
+
+		'Thanks for enjoy with me ','Sorry ,this is beyond my ability']
 
 
 
-# This function adds two numbers
+# fetching tokens from the text command
 
-def add(x, y):
+def extract_from_text(text):
 
-    return x + y
+	l=[]
 
+	for t in text.split(' '):
 
+		try:
 
-# This function subtracts two numbers
+			l.append(float(t))
 
-def subtract(x, y):
+		except ValueError:
 
-    return x - y
+			pass
 
-
-
-# This function multiplies two numbers
-
-def multiply(x, y):
-
-    return x * y
+	return l
 
 
 
-# This function divides two numbers
+# calculating LCM
 
-def divide(x, y):
+def lcm(a,b):
 
-    return x / y
+	L=a if a>b else b
+
+	while L<=a*b:
+
+		if L%a==0 and L%b==0:
+
+			return L
+
+		L+=1
 
 
 
+# calculating HCF
+
+def hcf(a,b):
+
+	H=a if a<b else b
+
+	while H>=1:
+
+		if a%H==0 and b%H==0:
+
+			return H
+
+		H-=1
 
 
-print("Select operation.")
 
-print("1.Add")
+# Addition
 
-print("2.Subtract")
+def add(a,b):
 
-print("3.Multiply")
+	return a+b
 
-print("4.Divide")
+
+
+# Subtraction
+
+def sub(a,b):
+
+	return a-b
+
+
+
+# Multiplication
+
+def mul(a,b):
+
+	return a*b
+
+
+
+# Division
+
+def div(a,b):
+
+	return a/b
+
+
+
+# Remainder
+
+def mod(a,b):
+
+	return a%b
+
+
+
+# Response to command
+
+# printing - "Thanks for enjoy with me" on exit
+
+def end():
+
+	print(response[2])
+
+	input('press enter key to exit')
+
+	exit()
+
+
+
+def myname():
+
+	print(response[1])
+
+def sorry():
+
+	print(response[3])
+
+
+
+# Operations - performed on the basis of text tokens
+
+operations={'ADD':add,'PLUS':add,'SUM':add,'ADDITION':add,
+
+			'SUB':sub,'SUBTRACT':sub, 'MINUS':sub,
+
+			'DIFFERENCE':sub,'LCM':lcm,'HCF':hcf,
+
+			'PRODUCT':mul, 'MULTIPLY':mul,'MULTIPLICATION':mul,
+
+			'DIVISION':div,'MOD':mod,'REMANDER'
+
+			:mod,'MODULAS':mod}
+
+
+
+# commands
+
+commands={'NAME':myname,'EXIT':end,'END':end,'CLOSE':end}
+
+		
+
+print('--------------'+response[0]+'------------')
+
+print('--------------'+response[1]+'--------------------')
+
+
 
 
 
 while True:
 
-    # take input from the user
+	print()
 
-    choice = input("Enter choice(1/2/3/4): ")
+	text=input('enter your queries: ')
+
+	for word in text.split(' '):
+
+		if word.upper() in operations.keys():
+
+			try:
+
+				l = extract_from_text(text)
+
+				r = operations[word.upper()] (l[0],l[1])
+
+				print(r)
+
+			except:
+
+				print('something went wrong going plz enter again !!')
+
+			finally:
+
+					break
+
+		elif word.upper() in commands.keys():
+
+					commands[word.upper()]()
+
+					break
+
+	else:		
+
+		sorry()
 
 
-
-    # check if choice is one of the four options
-
-    if choice in ('1', '2', '3', '4'):
-
-        num1 = float(input("Enter first number: "))
-
-        num2 = float(input("Enter second number: "))
-
-
-
-        if choice == '1':
-
-            print(num1, "+", num2, "=", add(num1, num2))
-
-
-
-        elif choice == '2':
-
-            print(num1, "-", num2, "=", subtract(num1, num2))
-
-
-
-        elif choice == '3':
-
-            print(num1, "*", num2, "=", multiply(num1, num2))
-
-
-
-        elif choice == '4':
-
-            print(num1, "/", num2, "=", divide(num1, num2))
-
-        
-
-        # check if user wants another calculation
-
-        # break the while loop if answer is no
-
-        next_calculation = input("Let's do next calculation? (yes/no): ")
-
-        if next_calculation == "no":
-
-          break
-
-    
-
-    else:
-
-        print("Invalid Input")
